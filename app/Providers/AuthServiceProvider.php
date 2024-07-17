@@ -24,12 +24,12 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
-
-        Gate::define('update-event',function($user , Event $event){
+        //using Gate for authorization
+      /*  Gate::define('update-event',function($user , Event $event){
             $user->id == $event->user_id;
         });
         Gate::define('delete-attendee', function($user, Event $event , Attendee $attendee){
             return $user->id == $event->user_id || $user->id == $attendee->user_id;
-        });
+        });*/
     }
 }
