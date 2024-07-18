@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;
+use App\Notifications\EventReminderNotification;
 
 class SendEventReminders extends Command
 {
@@ -31,7 +32,7 @@ class SendEventReminders extends Command
         $eventLabel = Str::plural('event' , $eventCount);
         $this->info("Found {$eventCount} {$eventLabel}");
         $events->each(fn($event)=> $event->attendees
-                ->each(fn($attendee) => $this->info("Notification to {$attendee->user_id}")) );
+                ->each(fn($attendee) =>$attendee->user->notify(new EventReminderNotification($event))));
         $this->info('Reminders sent Successfully');
     }
 }
